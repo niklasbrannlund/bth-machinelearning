@@ -10,16 +10,20 @@ testdata = [0, 4, 100, 25;
 [rows, columns] = size(testdata);
         
 for i = 1:rows
-    % get calculate distance between all datapoints and sort these in
-    % separate vectors
-    [rooms, roomIndex] = sort(abs(training_ds(:,2)-testdata(i, 2)));
-    [sizes, sizeIndex] = sort(abs(training_ds(:,3)-testdata(i, 3)));
-    [ages, ageIndex] = sort(abs(training_ds(:,4)-testdata(i, 4)));
     
-    % get prize of these houses and average it
-    estimatedPrice = mean([mean(training_ds(roomIndex(1:k), 1)), ... 
-                           mean(training_ds(sizeIndex(1:k), 1)), ...
-                           mean(training_ds(ageIndex(1:k), 1))]);
+    % calculate manhattan distance
+    distance = abs(training_ds(:, 2) - testdata(i, 2)) + ... % room variable distance
+               abs(training_ds(:, 3) - testdata(i, 3)) + ... % size variable distance
+               abs(training_ds(:, 4) - testdata(i, 4));      % age variable distance
+           
+    % sort the distance vector
+    [sortedDistance, indexes] = sort(distance);
+    
+    % pick out the k closest neighbors from training dataset
+    prices = training_ds(indexes(1:k), 1);
+    
+    % get the estimated house price using mean of training prices
+    estimatedPrice = mean(prices);
                        
     testdata(i, 1) = estimatedPrice;
 end
