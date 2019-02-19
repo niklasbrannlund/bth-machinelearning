@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{flexisym}
+\title{DV2574 - Assignment 1}
+\author{Niklas Brännlund}
+\date{February 2019}
+
+\begin{document}
+\maketitle
+
+\section{Problems}
+\subsection{Correlation coefficients}
+    Given the sample data
+    \begin{equation}
+        \begin{aligned}
+            X_{1} & = 
+            \begin{bmatrix}
+               2.5 & 3.6 & 1.2 & 0.8 & 4.0 & 3.4
+            \end{bmatrix} \\
+            X_{2} & = 
+            \begin{bmatrix}
+               1.2 & 1.0 & 1.8 & 0.9 & 3.0 & 2.2
+            \end{bmatrix}\\
+            X_{3} & = 
+            \begin{bmatrix}
+           8.0 & 15.0 & 12.0 & 6.0 & 8.0 & 10.0
+            \end{bmatrix}
+        \end{aligned}
+    \end{equation}
+    the correlation coefficient matrix was calculated to be \\
+    \begin{equation}
+        \begin{bmatrix}
+            1.00 & 0.53 & 0.31\\
+            0.53 & 1.0000 & -0.13\\
+            0.31 & -0.13 & 1.00\\
+        \end{bmatrix}
+    \end{equation}
+
+    From this matrix we can extract the correlation coefficients $\rho_{X_iX_j}$ to be  
+    \begin{equation}
+        \begin{aligned}
+            \rho_{X_1X_2} & = 0.53\\
+            \rho_{X_1X_3} & = 0.31\\
+            \rho_{X_2X_3} & = -0.13\\
+        \end{aligned}
+    \end{equation}
+    This was done by calculating the quantity 
+    \begin{equation}
+        \rho_{m,n} = \frac{S_{X_mX_n}}{S_{X_{m}X_{m}}S_{X_{n}X_{n}}}
+    \end{equation}
+    where $m,n \in \{1, 2, 3\}$. The quantity $S_{X_{m}X_{n}}$ is the covariance and is calculated as 
+    \begin{equation}
+        S_{X_{m}X_{n}} = \sum_{i=1}^{k} \frac{(x_{m_i} - \bar{X}_m)(x_{n_i} - \bar{X}_N)}{k-1}
+    \end{equation}
+    and $S_{X_mX_m}$, which is the standard deviation of dataset $X_m$, is calculated as 
+    \begin{equation}
+        S_{X_{m}X_{m}} = \sqrt{\sum_{i=1}^{k} \frac{(x_{m_i} - \bar{X}_{m_i})^2}{n-1}}.
+        \label{eq:std}
+    \end{equation}
+    The quantity $S_{X_nX_n}$ is calculated in the same way as \eqref{eq:std}. This result was also compared against matlabs own           implementation corrcoef\footnote{https://se.mathworks.com/help/matlab/ref/corrcoef.html}
+ 
+    \subsection{K nearest neighbor}
+    Given the following dataset of house prices together with house variables 
+    \begin{equation}
+        \begin{tabular}{ c | c | c | c }
+            y: Price & $x_1$: Rooms & $x_2$: Size ($m^2$) & $x_3$: Age of house (years)\\ \hline
+            500000 & 2 & 45 & 25\\
+            800000 & 3 & 65 & 30\\ 
+            1000000 & 6 & 100 & 40\\
+            350000 &2 & 30 & 20 \\
+            100000 & 2 & 25 & 20 
+        \end{tabular}
+    \end{equation}
+    The assignment is to use k-nearest-neighbor method to estimate house prices with the following properties
+    \begin{equation}
+        \begin{tabular}{ c | c | c | c }
+            y: Price & $x\textprime_1$: Rooms & $x\textprime_2$: Size ($m^2$) & $x\textprime_3$: Age of house (years)\\ \hline
+            ? & 4 & 100 & 25\\
+            ? & 1 & 60 & 20\\ 
+        \end{tabular}
+    \end{equation}
+    using both k = 1 and k = 2. This was done by calculating the manhattan distance D between each datapoint using following function
+    \begin{equation}
+        D = \sum_{i=1}^n |x_i - x\textprime_i|
+    \end{equation}
+    This will give you a distance vector which can be sorted and from there you can retrieve the $k$-closest neighbors by choosing the first $k$ elements in this vector. From these values you can pick out the house price values that these neighbors had from the training dataset. If $k > 1$, the mean value of these house prices were calculated to retrieve the estimation, see implementation in code. This approach resulted in the following house price estimations
+    
+    \begin{equation}
+        \begin{tabular}{ c | c | c | c }
+            y: Price & $x\textprime_1$: Rooms & $x\textprime_2$: Size ($m^2$) & $x\textprime_3$: Age of house (years)\\ \hline
+            1000000 & 4 & 100 & 25\\
+            800000 & 1 & 60 & 20\\ 
+        \end{tabular}
+    \end{equation}
+    for k = 1, and for k = 2 the result was the following
+    \begin{equation}
+        \begin{tabular}{ c | c | c | c }
+            y: Price & $x\textprime_1$: Rooms & $x\textprime_2$: Size ($m^2$) & $x\textprime_3$: Age of house (years)\\ \hline
+            900000 & 4 & 100 & 25\\
+            650000 & 1 & 60 & 20\\ 
+        \end{tabular}
+    \end{equation}
+    
+\end{document}
