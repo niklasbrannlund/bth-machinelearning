@@ -1,6 +1,8 @@
 # import 
 import math
 import numpy as np
+import kmeansclustering as kmc
+
 
 NUM_CLUSTERS = 2
 images = []
@@ -53,4 +55,7 @@ def calculate_euclidian_distance(x, y, centroid_x, centroid_y):
     return math.sqrt(math.pow(x - centroid_x, 2) + math.pow(y - centroid_y, 2))
 
 processed_data = perform_preprocessing()
-print(processed_data)
+
+k = kmc.KMeansClustering(processed_data, 2)
+k.initialize_centroids()
+k.print_centroids()
