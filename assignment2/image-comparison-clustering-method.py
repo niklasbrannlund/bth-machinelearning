@@ -6,7 +6,6 @@ import kmeansclustering as kmc
 NUM_CLUSTERS = 2
 images = []
 
-
 def initialize_images():
     # initialize image pixel arrays
     images.append(np.array([[154, 157, 157, 157, 150, 150, 170, 170, 175, 190],
@@ -52,8 +51,4 @@ def perform_preprocessing():
 processed_data = perform_preprocessing()
 
 k = kmc.KMeansClustering(processed_data, NUM_CLUSTERS)
-k.initialize_centroids()
-k.initialize_data()
-for _ in range(3):
-    k.update_clusters()
-    k.recalculate_centroids()
+k.execute()
