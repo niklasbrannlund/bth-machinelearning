@@ -1,5 +1,4 @@
 # import 
-import math
 import numpy as np
 import kmeansclustering as kmc
 
@@ -49,13 +48,12 @@ def perform_preprocessing():
     imageDiff = calculate_imagediff(images[0], images[1])
     normalizedMatrix = normalize_matrix(imageDiff)
     return normalizedMatrix
-
-# return euclidian distance between point (x,y) and (centroid_x, centroid_y)
-def calculate_euclidian_distance(x, y, centroid_x, centroid_y):
-    return math.sqrt(math.pow(x - centroid_x, 2) + math.pow(y - centroid_y, 2))
-
+    
 processed_data = perform_preprocessing()
 
-k = kmc.KMeansClustering(processed_data, 2)
+k = kmc.KMeansClustering(processed_data, NUM_CLUSTERS)
 k.initialize_centroids()
-k.print_centroids()
+k.initialize_data()
+for _ in range(3):
+    k.update_clusters()
+    k.recalculate_centroids()
