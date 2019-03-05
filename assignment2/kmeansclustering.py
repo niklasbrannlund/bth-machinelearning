@@ -94,6 +94,14 @@ class KMeansClustering:
                     currentMin = distance
                     data.set_centroid(centroid)
 
+    def doSanityCheck(self):
+        datawihoutcentroid = [x for x in self.clusterdata if x.get_centroid() is None]
+        if datawihoutcentroid:
+            print("\r\n ----------------")
+            print("\r\nWARNING: Not all datapoints have been assigned to a centroid")
+            print("\r\n ----------------")
+        
+
     def execute(self):
         notDoneYet = True
         self.initialize_centroids()
@@ -101,4 +109,5 @@ class KMeansClustering:
         while(notDoneYet):
             self.update_clusters()
             notDoneYet = self.recalculate_centroids()
+        self.doSanityCheck()
         return self.clusterdata

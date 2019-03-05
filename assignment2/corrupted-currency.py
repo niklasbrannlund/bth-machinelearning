@@ -1,6 +1,6 @@
 import numpy as np
 import kmeansclustering as kmc
-
+import itertools as it
 
 data = np.array([7845, 778, 942, 143, 0.75,
                  7956, 810, 976, 146, 0.76,
@@ -17,4 +17,6 @@ data = np.array([7845, 778, 942, 143, 0.75,
 k = kmc.KMeansClustering(data, 6)
 result = k.execute()
 
+for r in result:
+    print("Value: {}, Centroid: {}".format(r.value, r.get_centroid().get_value()))
 
