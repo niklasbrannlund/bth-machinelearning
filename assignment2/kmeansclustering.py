@@ -10,10 +10,12 @@ class DataPoint:
 
     def set_centroid(self, centroid):
         self.centroid = centroid
+    
+    def get_value(self):
+        return self.value
 
 class Centroid:
-    def __init__(self, id, value, ):
-        self.id = id
+    def __init__(self, value, ):
         self.value = value
 
     def set_value(self, value):
@@ -21,9 +23,6 @@ class Centroid:
 
     def get_value(self):
         return self.value
-    
-    def get_id(self):
-        return self.id
 
 class KMeansClustering:
     centroids = []
@@ -43,7 +42,7 @@ class KMeansClustering:
             while(isNotUnique):
                 r = random.randint(0, len(self.origData)-1)    
                 c = random.randint(0, len(self.origData[0])-1) 
-                centroid = Centroid(id, self.origData[r][c])
+                centroid = Centroid(self.origData[r][c])
                 if next((x for x in self.centroids if x.value ==  centroid.value), None) == None: # see if any centroid already has value
                     self.centroids.append(centroid)
                     print("Added centroid with value " + str(centroid.value))
@@ -91,7 +90,6 @@ class KMeansClustering:
         return notDoneYet
 
 
-
     def update_clusters(self):
         for data in range(len(self.clusterdata)):
             currentPoint = self.clusterdata[data]
@@ -104,7 +102,7 @@ class KMeansClustering:
                     currentPoint.set_centroid(centroid)
                     
     def print_result(self):
-        clusterdata = [point.centroid.get_id() for point in self.clusterdata]
+        clusterdata = [1 if point.value > 0.4 else 0 for point in self.clusterdata]
         print(np.reshape(clusterdata, (10, 10)))
 
     def execute(self):
