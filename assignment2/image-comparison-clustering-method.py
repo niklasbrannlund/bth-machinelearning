@@ -51,4 +51,8 @@ def perform_preprocessing():
 processed_data = perform_preprocessing()
 
 k = kmc.KMeansClustering(processed_data, NUM_CLUSTERS)
-k.execute()
+result = k.execute()
+
+# set 1 if pixel is changed (arbitrary value of ~0.4) and 0 otherwise and print result
+clusterdata = [1 if point.value > 0.4 else 0 for point in result]
+print(np.reshape(clusterdata, (10, 10)))
