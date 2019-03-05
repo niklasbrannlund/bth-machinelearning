@@ -87,7 +87,7 @@ class KMeansClustering:
 
     def update_clusters(self):
         for data in self.clusterdata:
-            currentMin = 1e3 # some large number 
+            currentMin = float('inf') # some large number 
             for centroid in self.centroids:
                 distance = self.calculate_euclidian_distance(data.value, centroid.get_value())
                 if(distance < currentMin):
