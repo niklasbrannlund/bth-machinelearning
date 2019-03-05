@@ -14,9 +14,12 @@ data = np.array([7845, 778, 942, 143, 0.75,
                  1154, 148, 0.72, 8553, 811,
                  1218, 175, 0.84])
 
+def getKey(clusterdata):
+    return clusterdata.get_centroid().get_value()  
+
 k = kmc.KMeansClustering(data, 6)
 result = k.execute()
 
-for r in result:
+for r in sorted(result, key=getKey):
     print("Value: {}, Centroid: {}".format(r.value, r.get_centroid().get_value()))
-
+  
