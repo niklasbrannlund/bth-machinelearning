@@ -47,9 +47,11 @@ def perform_preprocessing():
     imageDiff = calculate_imagediff(images[0], images[1])
     normalizedMatrix = normalize_matrix(imageDiff)
     return normalizedMatrix
-    
+
+# perform preprocessing  
 processed_data = perform_preprocessing()
 
+# run algorithm
 k = kmc.KMeansClustering(processed_data, NUM_CLUSTERS)
 result = k.execute()
 
