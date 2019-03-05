@@ -42,7 +42,7 @@ class KMeansClustering:
             isNotUnique = True
             while(isNotUnique):
                 centroid = Centroid(random.choice(self.origData))
-                if next((x for x in self.centroids if x.value ==  centroid.value), None) == None: # see if any centroid already has value
+                if not [c for c in self.centroids if c.value ==  centroid.value]: # see if any centroid already has value
                     self.centroids.append(centroid)
                     print("Added centroid with value " + str(centroid.value))
                     isNotUnique = False
