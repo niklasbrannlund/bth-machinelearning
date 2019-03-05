@@ -9,6 +9,9 @@ class DataPoint:
     def set_centroid(self, centroid):
         self.centroid = centroid
     
+    def get_centroid(self):
+        return self.centroid
+    
     def get_value(self):
         return self.value
 
@@ -51,8 +54,10 @@ class KMeansClustering:
             self.clusterdata.append(point)
 
             for centroid in self.centroids:
-               if(centroid.value == point.value):
-                   point.set_centroid(centroid)
+                if(centroid.value == point.value):
+                    point.set_centroid(centroid)
+                else:
+                    point.set_centroid(None)
  
         
         print("Added " + str(len(self.clusterdata)) + " datapoints")
@@ -64,8 +69,9 @@ class KMeansClustering:
             value = 0
             averagedValue = 0
             counter = 0
-            for data in self.clusterdata:
-                if(data.centroid == centroid):
+            filteredCentroidList = [clusterDataWithoutNone for clusterDataWithoutNone in self.clusterdata if clusterDataWithoutNone.get_centroid()]
+            for data in filteredCentroidList:
+                if(data.get_centroid() == centroid):
                     counter += 1
                     value += data.value
             
