@@ -20,6 +20,9 @@ def getKey(clusterdata):
 k = kmc.KMeansClustering(data, 6)
 result = k.execute()
 
+sortedList = sorted(result, key=getKey)
+print("------ Min Price ------")
+
+
 for r in sorted(result, key=getKey):
     print("Value: {}, Centroid: {}".format(r.value, r.get_centroid().get_value()))
-  
