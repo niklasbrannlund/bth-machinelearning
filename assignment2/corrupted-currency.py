@@ -3,6 +3,7 @@ from algorithm import kmeansclustering as kmc
 import pandas as pd
 import itertools as it
 
+NUM_CLUSTERS = 4
 MAX_PRICE = 20000
 MIN_PRICE = 0
 
@@ -25,8 +26,13 @@ def groupAndPrintData(result):
                   'data': [r.value for r in result]}, columns=['key', 'data'])
     grouped_df = df.groupby(df.key)
     
+    # corrupted prices
+    corrKey = df.loc[(df.key > MAX_PRICE) | (df.key < MIN_PRICE), 'key'].iloc[0]
+    print("------CORRUPTED PRICES-----\r\n")
+    print(grouped_df.get_group(corrKey), "\r\n")
+    
     # maximum prices
-    maxKey = grouped_df.keys.max()
+    maxKey = df.loc[df.key < MAX_PRICE, 'key'].max()
     print("------MAX PRICES-----\r\n")
     print(grouped_df.get_group(maxKey), "\r\n")
 
@@ -36,6 +42,6 @@ def groupAndPrintData(result):
     print(grouped_df.get_group(minKey), "\r\n")
 
 
-k = kmc.KMeansClustering(data, 6)
+k = kmc.KMeansClustering(data, NUM_CLUSTERS)
 result = k.execute()
 groupAndPrintData(result)
