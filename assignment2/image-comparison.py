@@ -1,6 +1,6 @@
 # import 
 import numpy as np
-import kmeansclustering as kmc
+from algorithm import kmeansclustering as kmc
 
 
 NUM_CLUSTERS = 2

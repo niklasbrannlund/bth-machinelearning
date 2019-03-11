@@ -1,5 +1,5 @@
 import numpy as np
-import kmeansclustering as kmc
+from algorithm import kmeansclustering as kmc
 import itertools as it
 
 data = np.array([7845, 778, 942, 143, 0.75,
