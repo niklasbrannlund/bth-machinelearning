@@ -114,3 +114,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# zip
+.zip
+
+# pdf
+.pdf
