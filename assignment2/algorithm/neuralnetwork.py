@@ -4,7 +4,7 @@ class NeuralNetwork():
 
     def __init__(self, weights, learning_rate, bias):
         self.P = np.array([0, 0, 1, 1, 0, 1, 0, 1]).reshape(2,4)
-        self.t = np.array([0, 1, 1, 1])
+        self.desired_output = np.array([0, 1, 1, 1])
         self.weights = weights #np.array([0.3, -0.1]).reshape(1,2) # initial weights
         self.learning_rate = learning_rate
         self.bias = bias
@@ -28,9 +28,9 @@ class NeuralNetwork():
             estimated_output = np.empty([4])
             for i in range(self.c):
                 net = np.matmul(self.weights, self.P[:, i]) + self.bias
-                a = np.heaviside(net, 1)
-                estimated_output[i] = a
-                e = self.calculate_error(self.t[i], a)
+                activation_result = np.heaviside(net, 1)
+                estimated_output[i] = activation_result
+                e = self.calculate_error(self.desired_output[i], activation_result)
                 self.weights = self.update_weights(self.weights, self.learning_rate, e, self.P[:,i])
                 self.bias = self.update_bias(self.bias, self.learning_rate, e)
         
@@ -39,9 +39,9 @@ class NeuralNetwork():
                 print("bias on i={}: {}\r\n".format(i, self.bias))
                 print("---------------------\r\n\r\n\r\n")
 
-            if(np.array_equal(estimated_output, self.t)):
+            if(np.array_equal(estimated_output, self.desired_output)):
                 adjustmentDone = True
-                print("Adjustment done by finding correct parameters")
+                print("Adjustment done by finding correct parameters\r\nIt took {} iterations to complete".format(iteration))
             elif iteration >= self.maxIterations:
                 adjustmentDone = True
                 print("Adjustment done by reaching max iterations")
