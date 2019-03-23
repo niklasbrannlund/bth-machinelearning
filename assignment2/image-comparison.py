@@ -31,8 +31,8 @@ def initialize_images():
                   [178, 231, 245, 226, 215, 145, 188, 230, 170, 140]]).astype(float))
 
 # get absolute diff between images
-def calculate_imagediff(imageA, imageB):
-    return np.absolute(np.array(imageA) - np.array(imageB))
+def calculate_imagediff(imA, imB):
+    return np.absolute(np.array(imA) - np.array(imB))
 
 # normalize matrix
 def normalize_matrix(matrix):
@@ -44,9 +44,9 @@ def normalize_matrix(matrix):
 # calculate absolute difference and normalize
 def perform_preprocessing():
     initialize_images()
-    imageDiff = calculate_imagediff(images[0], images[1])
-    normalizedMatrix = normalize_matrix(imageDiff)
-    return normalizedMatrix
+    im = calculate_imagediff(images[0], images[1])
+    imNormalized = normalize_matrix(im)
+    return imNormalized
 
 # perform preprocessing  
 processed_data = perform_preprocessing()
@@ -56,5 +56,5 @@ k = kmc.KMeansClustering(processed_data, NUM_CLUSTERS)
 result = k.execute()
 
 # set 1 if pixel is changed (arbitrary value of ~0.4) and 0 otherwise and print result
-clusterdata = [1 if point.value > 0.4 else 0 for point in result]
-print(np.reshape(clusterdata, (10, 10)))
+imResult = [1 if point.value > 0.4 else 0 for point in result]
+print(np.reshape(imResult, (10, 10)))
