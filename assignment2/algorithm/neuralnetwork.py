@@ -5,7 +5,7 @@ class NeuralNetwork():
     def __init__(self, weights, learning_rate, bias):
         self.P = np.array([0, 0, 1, 1, 0, 1, 0, 1]).reshape(2,4)
         self.desired_output = np.array([0, 1, 1, 1])
-        self.weights = weights #np.array([0.3, -0.1]).reshape(1,2) # initial weights
+        self.weights = weights # initial weights
         self.learning_rate = learning_rate
         self.bias = bias
         self.c = self.P.shape[1]
