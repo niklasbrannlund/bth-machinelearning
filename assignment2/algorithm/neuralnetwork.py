@@ -15,8 +15,8 @@ class NeuralNetwork():
     def update_weights(self, w, rate, e, p):
         return w + rate*p*e
 
-    def calculate_error(self, t, a):
-        return t-a
+    def calculate_error(self, desired, actual):
+        return desired-actual
 
     def update_bias(self, b, e, rate):
         return b + rate * b * e
