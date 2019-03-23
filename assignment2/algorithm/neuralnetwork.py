@@ -33,11 +33,6 @@ class NeuralNetwork():
                 e = self.calculate_error(self.desired_output[i], activation_result)
                 self.weights = self.update_weights(self.weights, self.learning_rate, e, self.P[:,i])
                 self.bias = self.update_bias(self.bias, self.learning_rate, e)
-        
-                print("e on i={}: {}\r\n".format(i, e))
-                print("weights on i={}: {}\r\n".format(i, self.weights))
-                print("bias on i={}: {}\r\n".format(i, self.bias))
-                print("---------------------\r\n\r\n\r\n")
 
             if(np.array_equal(estimated_output, self.desired_output)):
                 adjustmentDone = True
@@ -47,3 +42,6 @@ class NeuralNetwork():
                 print("Adjustment done by reaching max iterations")
     
             iteration += 1
+        
+        print("------ FINAL RESULT ------\r\n")
+        print("Weights:\r\n \t w_1 = {}\r\n \t w_2 = {}\r\n".format(self.weights[0,0], self.weights[0,1]))
