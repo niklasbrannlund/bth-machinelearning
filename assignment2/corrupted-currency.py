@@ -22,17 +22,17 @@ data = np.array([7845, 778, 942, 143, 0.75,
 def groupAndPrintData(result):
     print("\r\n\r\n\r\n-----------------PRINTING RESULT----------------\r\n")
     
-    df = pd.DataFrame({'key': [r.get_centroid().get_value() for r in result],
-                  'data': [r.value for r in result]}, columns=['key', 'data'])
-    grouped_df = df.groupby(df.key)
+    df = pd.DataFrame({'centroid': [r.get_centroid().get_value() for r in result],
+                  'price': [r.value for r in result]}, columns=['centroid', 'price'])
+    grouped_df = df.groupby(df.centroid)
     
     # corrupted prices
-    corrKey = df.loc[(df.key > MAX_PRICE) | (df.key < MIN_PRICE), 'key'].iloc[0]
+    corrKey = df.loc[(df.centroid > MAX_PRICE) | (df.centroid < MIN_PRICE), 'centroid'].iloc[0]
     print("------CORRUPTED PRICES-----\r\n")
     print(grouped_df.get_group(corrKey), "\r\n")
     
     # maximum prices
-    maxKey = df.loc[df.key < MAX_PRICE, 'key'].max()
+    maxKey = df.loc[df.centroid < MAX_PRICE, 'centroid'].max()
     print("------MAX PRICES-----\r\n")
     print(grouped_df.get_group(maxKey), "\r\n")
 
@@ -41,6 +41,11 @@ def groupAndPrintData(result):
     print("------MIN PRICES-----\r\n")
     print(grouped_df.get_group(minKey), "\r\n")
 
+    # print all clusters
+    print("\r\n\r\n------- ALL CLUSTERS -------\r\n")
+    for key in grouped_df.keys.drop_duplicates():
+        print(grouped_df.get_group(key), "\r\n")
+        
 
 k = kmc.KMeansClustering(data, NUM_CLUSTERS)
 result = k.execute()
