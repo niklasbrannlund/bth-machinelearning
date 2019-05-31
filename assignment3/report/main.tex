@@ -59,7 +59,7 @@
     \begin{equation}
         O = \frac{(W - K + 2P)}{S} + 1
     \end{equation}
-    Given the convolutional layer in Figure 1, we have the following values W = 416, K = 5, S = 1, P = 1 and we use 32 filters. This will produce the output value
+    where W is the width of the input image, K is the 1D-kernel size, P is the padding and S is the strid. Given the convolutional layer in Figure 1, we have the following values W = 416, K = 5, S = 1, P = 1 and we use 32 filters. This will produce the output value
     \begin{equation}
         O = \frac{(416 - 5 + 2)}{1} + 1 = 414
     \end{equation}
@@ -67,7 +67,7 @@
     \begin{equation}
     207x207x32 = 1371168 
     \end{equation}
-    number of inputs for the fully connected layer
+    number of inputs for the fully connected neural network
     \subsection{Question b}
     In this question we have an input image of size 128x128x1 and we have the following setup of layers\\
     \includegraphics[width=\textwidth]{image2}
@@ -87,7 +87,7 @@
     \begin{equation}
         O = \frac{(30 - 5 +2)}{1} + 1 = 28
     \end{equation}
-    which, with 128 filters, will produce an output size of 28x28x128. And after rectifiera linear unit and pool layer we get 14x14x128. This means that the number of inputs for the fully connected layer will be
+    which, with 128 filters, will produce an output size of 28x28x128. And after rectifiera linear unit and pool layer we get 14x14x128. This means that the number of inputs for the fully connected neural network will be
     \begin{equation}
         14x14x128 = 25088
     \end{equation}
