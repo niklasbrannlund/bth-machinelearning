@@ -5,11 +5,12 @@
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 \usepackage[]{algorithm2e}
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
 \usepackage{url}
 \usepackage{enumitem}
 \usepackage{listings}
-\title{DV2574 - Assignment 2}
-\author{Niklas Br√§nnlund}
+\title{DV2574 - Assignment 3}
+\author{Niklas Br‰nnlund}
 \date{March 2019}
 
 \begin{document}
@@ -42,112 +43,53 @@
     \end{enumerate}
     
     \section{Convolutional neural network (CNN)}
+    \subsection{Question $\textbf{a}$}
+    Given an input image size of 416x416x1 and the following information
     
-    
-    This part is about constructing a two-input perceptron neural network model and using an algorithm for finding the final weights of the model. The inputs  $x_1$ and $x_2$ is described using the logical \textbf{OR} operator
-    \begin{equation}
-        \begin{tabular}{ | c | c | c | }
-            \hline
-            \multicolumn{2}{ |c| }{\textbf{Input variables}} & \textbf{OR} \\ 
-            $\boldsymbol{x_1}$ & $\boldsymbol{x_2}$ & $\boldsymbol{x_1}$ $\cup$ $\boldsymbol{x_2}$ \\ \hline
-            0 & 0 & 0\\
-            0 & 1 & 1\\
-            1 & 0 & 1\\
-            1 & 1 & 1\\ \hline
-        \end{tabular}
-        \label{eq:or}
-    \end{equation}
-    Using the input from eq. \eqref{eq:or} in the following algorithm \\
-
+    \includegraphics[width=\textwidth]{image1}
+    \captionof{figure}{Figure of one convolutional layer}
+    we can find the number of inputs for the fully connected neural network by going through the layers 
     \begin{enumerate}
-        \item Set initial weights $(w_1, w_2) = (0.5, 0.1)$ and bias $\theta = -0.1$. Learning rate $\alpha$ should be set to $\alpha = 0.01$ 
-        \item Activate the model by applying inputs $x_1(p), x_2(p)$ and the output from the OR operator $Y_d(p)$ (which is the desired output). Calculate the actual output for iteration p=1 
-        \begin{equation}
-            Y(p) = step\Bigg[\sum_{i=1}^n x_i(p)w_i(p) - \theta\Bigg]
-        \end{equation}
-        where $step$ is a step function.
-        \item Update the weights with the following equation
-        \begin{equation}
-            w_i(p+1) = w_i(p) + \Delta w_i(p)
-        \end{equation}
-        where $\Delta w_i(p)$ is the weight correction. It is defined as 
-        \begin{equation}
-            \Delta w_i(p) = \alpha\ x_i(p) e(p)
-        \end{equation}
-        where $e(p)$ is the difference between the desired output and the calculated result
-        \begin{equation}
-            e(p) = Y_d(p) - Y(p)
-        \end{equation}
+        \item Convolutional
+        \item Rectifier Linear Unit
+        \item Pool
     \end{enumerate}
-    By running the script \texttt{perceptron-neural-network.py} we get the output for the final weights to be
-    $w_1=0.1$ and $w_2 = 0.5$.
-    The algorithm logic for perceptron neural network can be found under \url{/algorithm/neuralnetwork.py}.
-    \section{K means clustering}
-    This section handles problem where k-means-algorithm is applied.
-        \subsection{Image comparison}
-        \label{im}
-        Given two images \textbf{imA} and \textbf{imB} where each image is presented by by a 10x10 pixel matrix. Find out for which pixel coordinated there is a big difference in pixel values. This is done by first calculating a difference image \textbf{im}
-        \begin{equation}
-            \textbf{im} = |\textbf{imA} - \textbf{imB}|
-        \end{equation}
-        Given the difference image, we normalize this image with the following equation
-        \begin{equation}
-            \textbf{imNormalized} = \frac{\textbf{im} - im_{min}}{im_{max} - im_{min}}
-        \end{equation}
-        where $im_{min}$ and $im_{max}$ is the min and max value of \textbf{im}, respectively. Now we can apply K-means-clustering on \textbf{imNormalized} to obtain which pixels that have changed between \textbf{imA} and \textbf{imB}. The result is printed as a result matrix 
-        
-        \begin{equation}
-            \textbf{imResult} = 
-            \begin{bmatrix}
-                0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-                0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-                0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-                0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-                0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 \\
-                0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 \\
-                0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 \\
-                1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
-                1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
-                1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1
-            \end{bmatrix}
-        \end{equation}
-        where 1 stands for a significant change in pixel value and 0 is no significant change. This result can be reproduced by running the script \texttt{image-comparison.py}. The algorithm logic for k-means-clustering can be found under \url{/algorithm/kmeansclustering.py}.
-        
-        \subsection{Corrupted currency}
-        Given a list of crypto currency prices that were gathered during a day. Use k-means clustering to find prices that were corrupted when they were stored. This problem uses the same algorithm as in section \ref{im}. Run the script \texttt{corrupted-currency.py} to get the result printed out. When using 6 clusters (setting NUM\_CLUSTERS = 6 in script) we get the following result
-        
-        \begin{enumerate}[label=(\alph*)]
-            \item The corrupted prices were found to be 
-            \begin{enumerate}
-                \item 100587\$
-                \item 101964\$
-                \item 120967\$
-            \end{enumerate}
-            \item The max prices were found to be
-            \begin{enumerate}
-                \item 7845.0\$
-                \item 7956.0\$
-                \item 8215.0\$
-                \item 8542.0\$
-                \item 8150.0\$
-                \item 8386.0\$
-                \item 8219.0\$
-                \item 7500.0\$
-                \item 9257.0\$
-                \item 8553.0\$
-            \end{enumerate}
-            \item the minimum prices were found to be
-            \begin{enumerate}
-	            \item 0.76\$
-            	\item 0.78\$
-            	\item 0.78\$
-            	\item 0.72\$
-            	\item 0.82\$
-            	\item 0.82\$
-            	\item 0.67\$
-            	\item 0.72\$
-            	\item 0.84\$
-            \end{enumerate}
-        \end{enumerate}
-        We can see that one cluster is created where the values are above the max price of 20.000\$ and these are the prices that are to be seen as corrupt. When we use for example 4 clusters, we can still find the corrupted prices as they create an identical cluster as in the 6-cluster-case. Although, the min prices-cluster is different compared to when using 6 clusters. This can be seen when running the script by setting the NUM\_CLUSTERS variable to 4.
+
+    The output from the Convolutional layer is calculated with
+    \begin{equation}
+        O = \frac{(W - K + 2P)}{S} + 1
+    \end{equation}
+    Given the convolutional layer in Figure 1, we have the following values W = 416, K = 5, S = 1, P = 1 and we use 32 filters. This will produce the output value
+    \begin{equation}
+        O = \frac{(416 - 5 + 2)}{1} + 1 = 414
+    \end{equation}
+    So in this case, after we apply one filter the output size will be 414x414. When we apply 32 filters we have the output size of 414x414x32. After applying the Rectifiera Linear Unit and Pool layer we have the output size 207x207x32. This will mean that we will have 
+    \begin{equation}
+    207x207x32 = 1371168 
+    \end{equation}
+    number of inputs for the fully connected layer
+    \subsection{Question b}
+    In this question we have an input image of size 128x128x1 and we have the following setup of layers\\
+    \includegraphics[width=\textwidth]{image2}
+    \captionof{figure}{Figure of three convolutional layer}
+    We will apply three different convolutional layers and if we use the same procedure as described previously we will start by calculating the output from the first convolutional layer. In the first layer we have the following variables:
+    W = 128, K = 3, S = 1, P = 1 and we have 32 filters. This will produce an output of
+    \begin{equation}
+        O = \frac{(12 - 3 + 2)}{1} + 1 = 128
+    \end{equation}
+    which will produce an output size of 128x128x32 since we apply 32 filters. After applying Rectifier linear unit and pooling layer we get 62x62x32. This produces the following values for the second convolutional layer:
+    W = 64, K = 7, S = 1, P = 1 and we have 16 filters. Given this we get an output of
+    \begin{equation}
+        O = \frac{(64 - 7 + 2)}{1} + 1 = 60
+    \end{equation}
+    for the second convolutional layer. Since we have 16 filters, the output size will be 60x60x16 and after rectifier linear unit and pool layer we get 30x30x16. The last convolutional layer will then have the values:
+    W = 30, K = 5, S = 1, P = 1 and 128 filter which will produce output
+    \begin{equation}
+        O = \frac{(30 - 5 +2)}{1} + 1 = 28
+    \end{equation}
+    which, with 128 filters, will produce an output size of 28x28x128. And after rectifiera linear unit and pool layer we get 14x14x128. This means that the number of inputs for the fully connected layer will be
+    \begin{equation}
+        14x14x128 = 25088
+    \end{equation}
+    
 \end{document}
